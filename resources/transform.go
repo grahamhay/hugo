@@ -105,7 +105,7 @@ type ResourceTransformationCtx struct {
 	// to be simple types, as it needs to be serialized to JSON and back.
 	Data map[string]interface{}
 
-	// This is used to publis additional artifacts, e.g. source maps.
+	// This is used to publish additional artifacts, e.g. source maps.
 	// We may improve this.
 	OpenResourcePublisher func(relTargetPath string) (io.WriteCloser, error)
 }
@@ -293,7 +293,6 @@ func (r *resourceAdapter) publish() {
 			r.spec.Logger.Errorf("Failed to publish Resource: %s", r.publisherErr)
 		}
 	})
-
 }
 
 func (r *resourceAdapter) TransformationKey() string {
@@ -397,7 +396,6 @@ func (r *resourceAdapter) transform(publish, setContent bool) error {
 		}
 
 		newErr := func(err error) error {
-
 			msg := fmt.Sprintf("%s: failed to transform %q (%s)", strings.ToUpper(tr.Key().Name), tctx.InPath, tctx.InMediaType.Type())
 
 			if err == herrors.ErrFeatureNotAvailable {
@@ -416,7 +414,6 @@ func (r *resourceAdapter) transform(publish, setContent bool) error {
 			}
 
 			return errors.Wrap(err, msg)
-
 		}
 
 		var tryFileCache bool
@@ -482,7 +479,7 @@ func (r *resourceAdapter) transform(publish, setContent bool) error {
 			publishwriters = append(publishwriters, metaw)
 		}
 
-		// Any transofrmations reading from From must also write to To.
+		// Any transformations reading from From must also write to To.
 		// This means that if the target buffer is empty, we can just reuse
 		// the original reader.
 		if b, ok := tctx.To.(*bytes.Buffer); ok && b.Len() > 0 {
@@ -590,7 +587,7 @@ type transformationUpdate struct {
 	startCtx ResourceTransformationCtx
 }
 
-func (u *transformationUpdate) isContenChanged() bool {
+func (u *transformationUpdate) isContentChanged() bool {
 	return u.content != nil || u.sourceFilename != nil
 }
 
